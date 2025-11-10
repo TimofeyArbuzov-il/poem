@@ -43,3 +43,45 @@ class Program
         Console.WriteLine("Стихотворение записано в файл одной строкой с переносами.");
     }
 }
+
+using System;
+using System.IO;
+using System.Text;
+
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Вводите размер масива N: ");
+        int N = int.Parse(Console.ReadLine());
+        int[] numbers = new int[N];
+        Random rnd = new Random();
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = rnd.Next(0, 10);
+        }
+        for (int i = 0; i < N - 1; i++)
+        {
+            for (int j = 0; j < N - i - 1; j++)
+            {
+                if (numbers[j] > numbers[j + 1])
+                {
+                    int temp = numbers[j];
+                    numbers[j] = numbers[j + 1];
+                    numbers[j + 1] = temp;
+
+                }
+            }
+        }
+        int min = numbers[0];
+        int max = numbers[N - 1];
+        string cmin = Convert.ToString(min);
+        using (FileStream fs = new FileStream("result.txt", FileMode.Append, FileAccess.Write))
+        {
+            byte[] data = Encoding.UTF8.GetBytes(cmin);
+            fs.Write(data, 0, data.Length);
+         }
+
+     }
+ }
